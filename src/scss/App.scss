@@ -1,0 +1,142 @@
+@import "palette";
+* {
+  box-sizing: border-box;
+  font-family: Calibri, sans-serif;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+.App {
+  display: grid;
+  grid-template-columns: 50px 31% auto;
+  height: 100%;
+  .Nav {
+    width: 50px;
+    height: 100%;
+    border-right: 1px solid #ddd;
+    background-color: $navL;
+    button {
+      display: block;
+      background-color: $navL;
+      border: none;
+      padding: 0;
+      outline: none;
+      width: 100%;
+      text-align: center;
+      padding: 12px 0;
+      .icon {
+        font-size: 1.4em;
+        font-weight: 100;
+        color: $iconL;
+      }
+      .search {
+        transform: rotateY(180deg);
+      }
+      &:hover {
+        background-color: $activeL;
+      }
+    }
+    .active {
+      background-color: $activeL;
+      .icon {
+        color: $prmryL;
+      }
+      &:hover {
+        background-color: $activexL;
+      }
+    }
+  }
+  .Aside {
+    height: 100%;
+    background-color: $asideL;
+    border-right: 1px solid #ddd;
+    display: grid;
+    grid-template-columns: 50% auto;
+    position: relative;
+    .Chapters {
+      height: 100%;
+      border-right: 1px solid #ddd;
+      .Chapter {
+        width: 100%;
+        height: 38px;
+        display: grid;
+        grid-template-columns: 32px auto;
+        &:focus-within{
+         background-color: $hoverL;
+        }
+        .mark_cnt {
+          .mark {
+            display: inline-block;
+            margin: 0 12px;
+            .mark_1 {
+              display: inline-block;
+              height: 20px;
+              margin: 7px 0;
+              width: 6px;
+              border-radius: 4px 0 0 4px;
+            }
+            .mark_2 {
+              display: inline-block;
+              margin: 5px 0;
+              height: 24px;
+              width: 2px;
+              border-radius: 2px 0 0 2px;
+            }
+          }
+        }
+        .txtCont {
+          padding: 2px 12px 2px 0;
+          height: 38px;
+          .txt {
+            position: relative;
+            height: 32px;
+            input {
+              width: 100%;
+              height: 100%;
+              outline: none;
+              font-size: 1em; 
+              padding-left: 12px;
+            }
+            button {
+              border: none;
+              font-size: 1em;
+              background-color: #fff;
+              height: 30px;
+              text-align: center;
+              width: 30px;
+              font-weight: 100;
+              position: absolute;
+              right: 1px;
+              bottom: 1px;
+              &:hover {
+                background-color: $hoverL;
+              }
+            }
+          }
+        }
+      }
+    }
+    .addBtn {
+      width: 50%;
+      position: absolute;
+      bottom: 0;
+      border: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      border-top: 1px solid #ddd;
+      outline: none;
+      text-align: left;
+      font-size: 0.9em;
+      background-color: inherit;
+      font-weight: bold;
+      padding: 0.8em;
+      color: $prmryL;
+      &:hover {
+        background-color: $hoverL;
+      }
+    }
+  }
+}
