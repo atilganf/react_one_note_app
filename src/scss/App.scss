@@ -6,15 +6,16 @@
 html,
 body,
 #root {
-  height: 100%;
+  height: 100vh;
 }
 .App {
   display: grid;
-  grid-template-columns: 50px 31% auto;
-  height: 100%;
+  grid-template-columns: 50px 421px auto;
+  height: 100vh;
+  overflow: hidden;
   .Nav {
     width: 50px;
-    height: 100%;
+    height: 100vh;
     border-right: 1px solid #ddd;
     background-color: $navL;
     button {
@@ -49,27 +50,37 @@ body,
     }
   }
   .Aside {
-    height: 100%;
+    height: 100vh;
     background-color: $asideL;
     border-right: 1px solid #ddd;
     display: grid;
     grid-template-columns: 50% auto;
     position: relative;
     .Chapters {
-      height: 100%;
+      height: 100vh;
       border-right: 1px solid #ddd;
+      overflow-y: scroll;
+      overflow-x: hidden;
       .Chapter {
         width: 100%;
         height: 38px;
         display: grid;
-        grid-template-columns: 32px auto;
-        &:focus-within{
-         background-color: $hoverL;
+        position: relative;
+        overflow: visible;
+        grid-template-columns: 20px auto;
+        &:focus-within {
+          background-color: $activeL;
+          &:hover {
+            background-color: $activeL;
+          }
+        }
+        &:hover {
+          background-color: $hoverL;
         }
         .mark_cnt {
           .mark {
             display: inline-block;
-            margin: 0 12px;
+            margin-left: 12px;
             .mark_1 {
               display: inline-block;
               height: 20px;
@@ -87,41 +98,95 @@ body,
           }
         }
         .txtCont {
+          position: relative;
           padding: 2px 12px 2px 0;
           height: 38px;
           .txt {
             position: relative;
             height: 32px;
             input {
-              width: 100%;
-              height: 100%;
+              width: 140px;
+              height: 32px;
               outline: none;
-              font-size: 1em; 
+              font-size: 0.9em;
               padding-left: 12px;
             }
+          }
+          button {
+            border: none;
+            font-size: 1em;
+            background-color: inherit;
+            height: 38px;
+            text-align: center;
+            width: 38px;
+            text-align: center;
+            font-size: 19px;
+            outline: none;
+            font-weight: 100;
+            position: absolute;
+            color: #333;
+            right: 0;
+            bottom: 0;
+            transition: color 0.4s;
+            cursor: pointer;
+            &:hover {
+              color: #007bff;
+            }
+          }
+          .options {
+            position: absolute;
+            top: 90%;
+            right: 10px;
+            border: 1px solid $navL;
+            box-shadow: 0px 0px 5px #555;
+            background-color: $asideL;
+            width: 100px;
+            overflow: visible;
+            z-index: 20;
+            opacity: 0;
+            transition: opacity 0.3s;
             button {
-              border: none;
-              font-size: 1em;
-              background-color: #fff;
-              height: 30px;
-              text-align: center;
-              width: 30px;
-              font-weight: 100;
-              position: absolute;
-              right: 1px;
-              bottom: 1px;
+              display: block;
+              text-align: left;
+              font-size: 15px;
+              color: #333;
+              z-index: 20;
+              position: relative;
+              width: 100%;
+              transition: background-color 0.4s;
               &:hover {
+                color: #333;
                 background-color: $hoverL;
+              }
+              .del_icon {
+                color: #ec4e4c;
+              }
+              .rename_icon {
+                color: #83beec;
               }
             }
           }
         }
       }
+      &::-webkit-scrollbar {
+        width: 6px;
+        z-index: 1;
+      }
+      &::-webkit-scrollbar-track {
+        background: $asideL;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #555;
+        border-width: 15px 2px 50px 2px;
+        border-style: solid;
+        border-color: $asideL;
+      }
     }
     .addBtn {
       width: 50%;
+      height: 40px;
       position: absolute;
-      bottom: 0;
+      top: calc(100vh - 40px) ;
       border: none;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -130,7 +195,7 @@ body,
       outline: none;
       text-align: left;
       font-size: 0.9em;
-      background-color: inherit;
+      background-color: $asideL;
       font-weight: bold;
       padding: 0.8em;
       color: $prmryL;
@@ -138,5 +203,10 @@ body,
         background-color: $hoverL;
       }
     }
+    .ab_c {
+      border-right: 1px solid $activeL;
+    }
+  }
+  .Main {
   }
 }

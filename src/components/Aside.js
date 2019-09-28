@@ -6,7 +6,7 @@ export default class Aside extends React.Component {
    render() {
       return (
          <div className="Aside">
-            <Chapters />
+            <Chapters/>
             <Pages />
          </div>
       );

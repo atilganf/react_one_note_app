@@ -5,8 +5,8 @@ export default class Pages extends React.Component {
    render() {
       return (
          <div className="Pages">
-            <button className="addBtn"><FontAwesomeIcon
-               className="add_icon" icon={["fas", "plus"]} />   Add Page</button>
+            <button className="addBtn ab_p"><FontAwesomeIcon
+               className="add_icon" icon={["fas", "plus"]} /> Add Page</button>
          </div>
       )
    }

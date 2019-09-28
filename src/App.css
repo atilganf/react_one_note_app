@@ -1,3 +1,18 @@
+/*
+____The thing i want to add____
+For Chapters
+   -Button that includes
+      *Delete
+      *Rename
+
+
+
+
+
+
+
+
+*/
 * {
   box-sizing: border-box;
   font-family: Calibri, sans-serif;
@@ -6,17 +21,18 @@
 html,
 body,
 #root {
-  height: 100%;
+  height: 100vh;
 }
 
 .App {
   display: grid;
-  grid-template-columns: 50px 31% auto;
-  height: 100%;
+  grid-template-columns: 50px 421px auto;
+  height: 100vh;
+  overflow: hidden;
 }
 .App .Nav {
   width: 50px;
-  height: 100%;
+  height: 100vh;
   border-right: 1px solid #ddd;
   background-color: #f3f2f1;
 }
@@ -51,7 +67,7 @@ body,
   background-color: #c2c0bd;
 }
 .App .Aside {
-  height: 100%;
+  height: 100vh;
   background-color: #faf9f8;
   border-right: 1px solid #ddd;
   display: grid;
@@ -59,21 +75,31 @@ body,
   position: relative;
 }
 .App .Aside .Chapters {
-  height: 100%;
+  height: 100vh;
   border-right: 1px solid #ddd;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .App .Aside .Chapters .Chapter {
   width: 100%;
   height: 38px;
   display: grid;
-  grid-template-columns: 32px auto;
+  position: relative;
+  overflow: visible;
+  grid-template-columns: 20px auto;
 }
 .App .Aside .Chapters .Chapter:focus-within {
+  background-color: #e1dfdd;
+}
+.App .Aside .Chapters .Chapter:focus-within:hover {
+  background-color: #e1dfdd;
+}
+.App .Aside .Chapters .Chapter:hover {
   background-color: #eae8e5;
 }
 .App .Aside .Chapters .Chapter .mark_cnt .mark {
   display: inline-block;
-  margin: 0 12px;
+  margin-left: 12px;
 }
 .App .Aside .Chapters .Chapter .mark_cnt .mark .mark_1 {
   display: inline-block;
@@ -90,6 +116,7 @@ body,
   border-radius: 2px 0 0 2px;
 }
 .App .Aside .Chapters .Chapter .txtCont {
+  position: relative;
   padding: 2px 12px 2px 0;
   height: 38px;
 }
@@ -98,31 +125,84 @@ body,
   height: 32px;
 }
 .App .Aside .Chapters .Chapter .txtCont .txt input {
-  width: 100%;
-  height: 100%;
+  width: 140px;
+  height: 32px;
   outline: none;
-  font-size: 1em;
+  font-size: 0.9em;
   padding-left: 12px;
 }
-.App .Aside .Chapters .Chapter .txtCont .txt button {
+.App .Aside .Chapters .Chapter .txtCont button {
   border: none;
   font-size: 1em;
-  background-color: #fff;
-  height: 30px;
+  background-color: inherit;
+  height: 38px;
   text-align: center;
-  width: 30px;
+  width: 38px;
+  text-align: center;
+  font-size: 19px;
+  outline: none;
   font-weight: 100;
   position: absolute;
-  right: 1px;
-  bottom: 1px;
+  color: #333;
+  right: 0;
+  bottom: 0;
+  transition: color 0.4s;
+  cursor: pointer;
 }
-.App .Aside .Chapters .Chapter .txtCont .txt button:hover {
+.App .Aside .Chapters .Chapter .txtCont button:hover {
+  color: #007bff;
+}
+.App .Aside .Chapters .Chapter .txtCont .options {
+  position: absolute;
+  top: 90%;
+  right: 10px;
+  border: 1px solid #f3f2f1;
+  box-shadow: 0px 0px 5px #555;
+  background-color: #faf9f8;
+  width: 100px;
+  overflow: visible;
+  z-index: 20;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.App .Aside .Chapters .Chapter .txtCont .options button {
+  display: block;
+  text-align: left;
+  font-size: 15px;
+  color: #333;
+  z-index: 20;
+  position: relative;
+  width: 100%;
+  transition: background-color 0.4s;
+}
+.App .Aside .Chapters .Chapter .txtCont .options button:hover {
+  color: #333;
   background-color: #eae8e5;
+}
+.App .Aside .Chapters .Chapter .txtCont .options button .del_icon {
+  color: #ec4e4c;
+}
+.App .Aside .Chapters .Chapter .txtCont .options button .rename_icon {
+  color: #83beec;
+}
+.App .Aside .Chapters::-webkit-scrollbar {
+  width: 6px;
+  z-index: 1;
+}
+.App .Aside .Chapters::-webkit-scrollbar-track {
+  background: #faf9f8;
+}
+.App .Aside .Chapters::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-width: 15px 2px 50px 2px;
+  border-style: solid;
+  border-color: #faf9f8;
 }
 .App .Aside .addBtn {
   width: 50%;
+  height: 40px;
   position: absolute;
-  bottom: 0;
+  top: calc(100vh - 40px);
   border: none;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -131,13 +211,16 @@ body,
   outline: none;
   text-align: left;
   font-size: 0.9em;
-  background-color: inherit;
+  background-color: #faf9f8;
   font-weight: bold;
   padding: 0.8em;
   color: #7719aa;
 }
 .App .Aside .addBtn:hover {
   background-color: #eae8e5;
+}
+.App .Aside .ab_c {
+  border-right: 1px solid #e1dfdd;
 }
 
 /*# sourceMappingURL=App.css.map */
