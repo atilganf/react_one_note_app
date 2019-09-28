@@ -1,12 +1,11 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default class Chapter extends React.Component {
+
+export default class page extends React.Component {
    constructor(props) {
       super(props);
       this.state = {
-         clrs: ["#5B2D90", "#D20078", "#0069AF", "#00A0D7", "#004F8B",
-            "#008C3A", "#00B44B", "#C10052", "#E71224", "#F6630D", "#C6A377"],
          named: false,
          showOpt: false,
       }
@@ -34,18 +33,18 @@ export default class Chapter extends React.Component {
          node.value = node.defaultValue;
       }
    }
-   setchapterRef = (node) => {
-      this.chapterRef = node;
+   setpageRef = (node) => {
+      this.pageRef = node;
    }
    handleClickOutside = (event) => {
-      if (this.chapterRef && !this.chapterRef.contains(event.target) &&
+      if (this.pageRef && !this.pageRef.contains(event.target) &&
          (!this.state.named || this.state.showOpt)) {
          this.setState({
             named: true,
             showOpt: false,
          })
       }
-      if (this.chapterRef && this.chapterRef.contains(event.target)) {
+      if (this.pageRef && this.pageRef.contains(event.target)) {
          this.props.onActive();
       }
    }
@@ -63,27 +62,20 @@ export default class Chapter extends React.Component {
          showOpt: true,
       })
       if (this.optRef && !this.optRef.current.contains(e.target)) {
-         this.optRef.current.style.top = e.clientY + "px";
-         this.optRef.current.style.left = e.clientX - 50 + "px";
+         this.optRef.current.style.top = e.pageY + "px";
+         this.optRef.current.style.left = e.pageX - 260 + "px";
       }
    }
    //-----------------------------------------------------------------------
    render() {
-      let clrs = this.state.clrs;
       return (
-         <div className={"Chapter " + (this.props.active ? "active_chp" : "")}
-            onContextMenu={(e) => this.showOptions(e)} ref={(n) => this.setchapterRef(n)} >
-            <div className="mark_cnt">
-               <div className="mark">
-                  <div className="mark_1" style={{ backgroundColor: clrs[this.props.clr_num] }} />
-                  <div className="mark_2" style={{ backgroundColor: clrs[this.props.clr_num] }} />
-               </div>
-            </div>
+         <div className={"Page " + (this.props.active ? "active_page" : "")}
+            onContextMenu={(e) => this.showOptions(e)} ref={(n) => this.setpageRef(n)} >
             <div className="txtCont">
                <div className="txt">
                   <input ref={this.inptxt} className="input_txt" type="text"
                      onKeyUp={(e) => this.checkNamed(e)} maxLength="15"
-                     defaultValue={"New Section " + this.props.num}
+                     defaultValue="Untitled Page" 
                      readOnly={this.state.named}
                      autoFocus
                      style={{

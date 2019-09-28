@@ -13,6 +13,22 @@ For Chapters
 
 
 */
+::-webkit-scrollbar {
+  width: 6px;
+  z-index: 1;
+}
+
+::-webkit-scrollbar-track {
+  background: #faf9f8;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-width: 15px 2px 50px 2px;
+  border-style: solid;
+  border-color: #faf9f8;
+}
+
 * {
   box-sizing: border-box;
   font-family: Calibri, sans-serif;
@@ -29,6 +45,7 @@ body,
   grid-template-columns: 50px 421px auto;
   height: 100vh;
   overflow: hidden;
+  position: relative;
 }
 .App .Nav {
   width: 50px;
@@ -68,11 +85,11 @@ body,
 }
 .App .Aside {
   height: 100vh;
+  position: relative;
   background-color: #faf9f8;
   border-right: 1px solid #ddd;
   display: grid;
   grid-template-columns: 50% auto;
-  position: relative;
 }
 .App .Aside .Chapters {
   height: 100vh;
@@ -80,19 +97,17 @@ body,
   overflow-y: scroll;
   overflow-x: hidden;
 }
+.App .Aside .Chapters .active_chp {
+  background-color: #e1dfdd;
+}
+.App .Aside .Chapters .active_chp:hover {
+  background-color: #e1dfdd !important;
+}
 .App .Aside .Chapters .Chapter {
   width: 100%;
   height: 38px;
   display: grid;
-  position: relative;
-  overflow: visible;
   grid-template-columns: 20px auto;
-}
-.App .Aside .Chapters .Chapter:focus-within {
-  background-color: #e1dfdd;
-}
-.App .Aside .Chapters .Chapter:focus-within:hover {
-  background-color: #e1dfdd;
 }
 .App .Aside .Chapters .Chapter:hover {
   background-color: #eae8e5;
@@ -116,12 +131,10 @@ body,
   border-radius: 2px 0 0 2px;
 }
 .App .Aside .Chapters .Chapter .txtCont {
-  position: relative;
   padding: 2px 12px 2px 0;
   height: 38px;
 }
 .App .Aside .Chapters .Chapter .txtCont .txt {
-  position: relative;
   height: 32px;
 }
 .App .Aside .Chapters .Chapter .txtCont .txt input {
@@ -131,31 +144,8 @@ body,
   font-size: 0.9em;
   padding-left: 12px;
 }
-.App .Aside .Chapters .Chapter .txtCont button {
-  border: none;
-  font-size: 1em;
-  background-color: inherit;
-  height: 38px;
-  text-align: center;
-  width: 38px;
-  text-align: center;
-  font-size: 19px;
-  outline: none;
-  font-weight: 100;
-  position: absolute;
-  color: #333;
-  right: 0;
-  bottom: 0;
-  transition: color 0.4s;
-  cursor: pointer;
-}
-.App .Aside .Chapters .Chapter .txtCont button:hover {
-  color: #007bff;
-}
 .App .Aside .Chapters .Chapter .txtCont .options {
-  position: absolute;
-  top: 90%;
-  right: 10px;
+  position: sticky;
   border: 1px solid #f3f2f1;
   box-shadow: 0px 0px 5px #555;
   background-color: #faf9f8;
@@ -167,6 +157,10 @@ body,
 }
 .App .Aside .Chapters .Chapter .txtCont .options button {
   display: block;
+  border: none;
+  outline: none;
+  padding: 10px;
+  background-color: #faf9f8;
   text-align: left;
   font-size: 15px;
   color: #333;
@@ -185,18 +179,73 @@ body,
 .App .Aside .Chapters .Chapter .txtCont .options button .rename_icon {
   color: #83beec;
 }
-.App .Aside .Chapters::-webkit-scrollbar {
-  width: 6px;
-  z-index: 1;
+.App .Aside .Pages {
+  height: 100vh;
+  border-right: 1px solid #ddd;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
-.App .Aside .Chapters::-webkit-scrollbar-track {
-  background: #faf9f8;
+.App .Aside .Pages .active_page {
+  background-color: #e1dfdd;
 }
-.App .Aside .Chapters::-webkit-scrollbar-thumb {
-  background-color: #555;
-  border-width: 15px 2px 50px 2px;
-  border-style: solid;
-  border-color: #faf9f8;
+.App .Aside .Pages .active_page:hover {
+  background-color: #e1dfdd !important;
+}
+.App .Aside .Pages .Page {
+  width: 100%;
+  height: 38px;
+}
+.App .Aside .Pages .Page:hover {
+  background-color: #eae8e5;
+}
+.App .Aside .Pages .Page .txtCont {
+  padding: 2px 12px 2px 0;
+  height: 38px;
+}
+.App .Aside .Pages .Page .txtCont .txt {
+  height: 32px;
+}
+.App .Aside .Pages .Page .txtCont .txt input {
+  width: 140px;
+  height: 32px;
+  outline: none;
+  font-size: 0.9em;
+  padding-left: 12px;
+}
+.App .Aside .Pages .Page .txtCont .options {
+  position: sticky;
+  border: 1px solid #f3f2f1;
+  box-shadow: 0px 0px 5px #555;
+  background-color: #faf9f8;
+  width: 100px;
+  overflow: visible;
+  z-index: 20;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.App .Aside .Pages .Page .txtCont .options button {
+  display: block;
+  border: none;
+  outline: none;
+  padding: 10px;
+  background-color: #faf9f8;
+  text-align: left;
+  font-size: 15px;
+  color: #333;
+  z-index: 20;
+  position: relative;
+  width: 100%;
+  transition: background-color 0.4s;
+}
+.App .Aside .Pages .Page .txtCont .options button:hover {
+  color: #333;
+  background-color: #eae8e5;
+}
+.App .Aside .Pages .Page .txtCont .options button .del_icon {
+  color: #ec4e4c;
+}
+.App .Aside .Pages .Page .txtCont .options button .rename_icon {
+  color: #83beec;
 }
 .App .Aside .addBtn {
   width: 50%;

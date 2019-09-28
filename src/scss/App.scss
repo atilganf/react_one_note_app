@@ -1,4 +1,5 @@
 @import "palette";
+@import "scrollbar";
 * {
   box-sizing: border-box;
   font-family: Calibri, sans-serif;
@@ -13,6 +14,7 @@ body,
   grid-template-columns: 50px 421px auto;
   height: 100vh;
   overflow: hidden;
+  position: relative;
   .Nav {
     width: 50px;
     height: 100vh;
@@ -51,29 +53,27 @@ body,
   }
   .Aside {
     height: 100vh;
+    position: relative;
     background-color: $asideL;
     border-right: 1px solid #ddd;
     display: grid;
     grid-template-columns: 50% auto;
-    position: relative;
     .Chapters {
       height: 100vh;
       border-right: 1px solid #ddd;
       overflow-y: scroll;
       overflow-x: hidden;
+      .active_chp {
+        background-color: $activeL;
+        &:hover {
+          background-color: $activeL !important;
+        }
+      }
       .Chapter {
         width: 100%;
         height: 38px;
         display: grid;
-        position: relative;
-        overflow: visible;
         grid-template-columns: 20px auto;
-        &:focus-within {
-          background-color: $activeL;
-          &:hover {
-            background-color: $activeL;
-          }
-        }
         &:hover {
           background-color: $hoverL;
         }
@@ -98,11 +98,9 @@ body,
           }
         }
         .txtCont {
-          position: relative;
           padding: 2px 12px 2px 0;
           height: 38px;
           .txt {
-            position: relative;
             height: 32px;
             input {
               width: 140px;
@@ -112,31 +110,8 @@ body,
               padding-left: 12px;
             }
           }
-          button {
-            border: none;
-            font-size: 1em;
-            background-color: inherit;
-            height: 38px;
-            text-align: center;
-            width: 38px;
-            text-align: center;
-            font-size: 19px;
-            outline: none;
-            font-weight: 100;
-            position: absolute;
-            color: #333;
-            right: 0;
-            bottom: 0;
-            transition: color 0.4s;
-            cursor: pointer;
-            &:hover {
-              color: #007bff;
-            }
-          }
           .options {
-            position: absolute;
-            top: 90%;
-            right: 10px;
+            position: sticky;
             border: 1px solid $navL;
             box-shadow: 0px 0px 5px #555;
             background-color: $asideL;
@@ -147,6 +122,10 @@ body,
             transition: opacity 0.3s;
             button {
               display: block;
+              border: none;
+              outline: none;
+              padding: 10px;
+              background-color: $asideL;
               text-align: left;
               font-size: 15px;
               color: #333;
@@ -168,25 +147,80 @@ body,
           }
         }
       }
-      &::-webkit-scrollbar {
-        width: 6px;
-        z-index: 1;
+    }
+    .Pages {
+      height: 100vh;
+      border-right: 1px solid #ddd;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      .active_page {
+        background-color: $activeL;
+        &:hover {
+          background-color: $activeL !important;
+        }
       }
-      &::-webkit-scrollbar-track {
-        background: $asideL;
-      }
-      &::-webkit-scrollbar-thumb {
-        background-color: #555;
-        border-width: 15px 2px 50px 2px;
-        border-style: solid;
-        border-color: $asideL;
+      .Page {
+        width: 100%;
+        height: 38px;
+        &:hover {
+          background-color: $hoverL;
+        }
+        .txtCont {
+          padding: 2px 12px 2px 0;
+          height: 38px;
+          .txt {
+            height: 32px;
+            input {
+              width: 140px;
+              height: 32px;
+              outline: none;
+              font-size: 0.9em;
+              padding-left: 12px;
+            }
+          }
+          .options {
+            position: sticky;
+            border: 1px solid $navL;
+            box-shadow: 0px 0px 5px #555;
+            background-color: $asideL;
+            width: 100px;
+            overflow: visible;
+            z-index: 20;
+            opacity: 0;
+            transition: opacity 0.3s;
+            button {
+              display: block;
+              border: none;
+              outline: none;
+              padding: 10px;
+              background-color: $asideL;
+              text-align: left;
+              font-size: 15px;
+              color: #333;
+              z-index: 20;
+              position: relative;
+              width: 100%;
+              transition: background-color 0.4s;
+              &:hover {
+                color: #333;
+                background-color: $hoverL;
+              }
+              .del_icon {
+                color: #ec4e4c;
+              }
+              .rename_icon {
+                color: #83beec;
+              }
+            }
+          }
+        }
       }
     }
     .addBtn {
       width: 50%;
       height: 40px;
       position: absolute;
-      top: calc(100vh - 40px) ;
+      top: calc(100vh - 40px);
       border: none;
       overflow: hidden;
       text-overflow: ellipsis;

@@ -11,19 +11,21 @@ export default class Chapters extends React.Component {
          clr_num: 0,
          chapter_num: 1,
       }
-      this.chapterRef = React.createRef();
    }
    addChapter = () => {
       let chapters = this.state.chapters.map((chp) => {
          return { ...chp }
       });
-      chapters = [...this.state.chapters, {
+      chapters.forEach(chp => chp.active = false)
+      chapters = [...chapters, {
          id: shortid.generate(),
          pages: [],
          clr_num: this.state.clr_num,
          num: this.state.chapter_num,
-         active: false,
+         active: true,
       }];
+      let pages = chapters[chapters.length - 1].pages;
+      this.props.onActiveChp(pages);
       this.setState({
          chapters: chapters,
          clr_num: (this.state.clr_num === 10) ? 0 : this.state.clr_num + 1,
@@ -34,17 +36,10 @@ export default class Chapters extends React.Component {
       let chapters = this.state.chapters.map((chp) => {
          return { ...chp }
       });
-      let index = chapters.filter(chp => chp.id === id)[0].num - 1;
+      let index = chapters.findIndex(chp => chp.id === id);
       chapters.splice(index, 1);
-      chapters.forEach(chp => {
-         if (chp.num > index) {
-            chp.num--;
-         }
-      });
       this.setState({
          chapters: chapters,
-         chapter_num: this.state.chapter_num - 1,
-
       });
    }
    onActive = (id) => {
@@ -58,11 +53,12 @@ export default class Chapters extends React.Component {
             chp.active = true;
          }
       });
+      let pages = chapters.find(chp => chp.id==id).pages;
+      this.props.onActiveChp(pages)
       this.setState({
          chapters: chapters,
       })
    }
-   
    render() {
       let chapters = this.state.chapters;
       return (
