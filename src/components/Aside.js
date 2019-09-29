@@ -3,22 +3,33 @@ import Chapters from "./Chapters";
 import Pages from "./Pages";
 
 export default class Aside extends React.Component {
-   constructor(props){
+   constructor(props) {
       super(props);
       this.state = {
-         activePages: [],
+         newPages: [],
+         oldPages: [],
       };
    }
-   changeActiveChp = (pages) =>{
+   achieveNewPages = (pages) => {
+      console.log("achieveNewPages");
       this.setState({
-         activePages: pages,
+         newPages: pages,
+      })
+   }
+   updatePages = (pages) => {
+      console.log("updatePages")
+      this.setState({
+         oldPages: pages,
       })
    }
    render() {
       return (
          <div className="Aside">
-            <Chapters onActiveChp = {(pages) => this.changeActiveChp(pages)}/>
-            <Pages activePages={this.state.activePages}/>
+            <Chapters pages={this.state.oldPages}
+               sendNewPages={(pages) => this.achieveNewPages(pages)} />
+            <Pages pages={this.state.pages}
+               updatePages={(pages) => this.updatePages(pages)}
+            />
          </div>
       );
    }

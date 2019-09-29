@@ -24,8 +24,10 @@ export default class Chapters extends React.Component {
          num: this.state.chapter_num,
          active: true,
       }];
+      //sending new active chapters' pages to the Aside
       let pages = chapters[chapters.length - 1].pages;
-      this.props.onActiveChp(pages);
+      this.props.sendNewPages(pages);
+      
       this.setState({
          chapters: chapters,
          clr_num: (this.state.clr_num === 10) ? 0 : this.state.clr_num + 1,
@@ -53,11 +55,26 @@ export default class Chapters extends React.Component {
             chp.active = true;
          }
       });
+      //Sending new pages
       let pages = chapters.find(chp => chp.id==id).pages;
-      this.props.onActiveChp(pages)
+      this.props.sendNewPages(pages)
       this.setState({
          chapters: chapters,
       })
+   }
+   componentWillMount(){
+      this.addChapter();
+   }
+   componentWillReceiveProps(){
+      if(this.props.pages){
+         let chapters = this.state.chapters.map((chp) => {
+            return { ...chp }
+         });
+         chapters.find(chp => chp.active === true).pages = this.props.pages
+         this.setState({
+            chapters: chapters,
+         })
+      }
    }
    render() {
       let chapters = this.state.chapters;

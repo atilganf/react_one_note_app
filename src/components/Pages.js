@@ -7,13 +7,14 @@ export default class Pages extends React.Component {
    constructor(props) {
       super(props);
       this.state = {
-         pages: this.props.activePages,
+         pages: [],
       }
    }
    addPage = () => {
-      let pages = this.state.pages.map((page) => {
+      
+      let pages = this.state.pages ? this.state.pages.map((page) => {
          return { ...page }
-      });
+      }) : [];
       pages.forEach(pg => pg.active = false);
       pages = [...pages, {
          id: shortid.generate(),
@@ -29,7 +30,7 @@ export default class Pages extends React.Component {
       });
       let index = pages.findIndex(page => page.id === id);
       pages.splice(index, 1);
-      
+
       this.setState({
          pages: pages,
       });
@@ -49,9 +50,24 @@ export default class Pages extends React.Component {
          pages: pages,
       })
    }
+   shouldComponentUpdate(nextProps, nextState){
+      if(this.state.pages !== nextState.pages){
+         this.props.updatePages(this.state.pages);
+         console.log("componentShouldUpdate True")
+         return true;
+      }
+      return true;
+   }
+   componentWillReceiveProps() {
+      console.log("setStatePages")
+      this.setState({
+         pages: this.props.pages,
+      });
+   }
 
    render() {
       let pages = this.state.pages;
+      if (pages === undefined) { pages = [] }
       return (
          <div className="Pages">
             {pages.map(page => (
