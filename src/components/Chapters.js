@@ -24,10 +24,11 @@ export default class Chapters extends React.Component {
          num: this.state.chapter_num,
          active: true,
       }];
-      //sending new active chapters' pages to the Aside
+      //sending new active chapters' pages to the Aside: working
       let pages = chapters[chapters.length - 1].pages;
-      this.props.sendNewPages(pages);
-      
+      let num = chapters[chapters.length - 1].num
+      this.props.sendNewPages(pages, num);
+
       this.setState({
          chapters: chapters,
          clr_num: (this.state.clr_num === 10) ? 0 : this.state.clr_num + 1,
@@ -48,33 +49,36 @@ export default class Chapters extends React.Component {
       let chapters = this.state.chapters.map((chp) => {
          return { ...chp }
       });
+      let same = (chapters.find(chp => chp.id === id).active === true);
       chapters.forEach((chp) => {
          if (chp.id !== id) {
             chp.active = false
-         } else if (chp.id === id){
+         } else if (chp.id === id) {
             chp.active = true;
          }
       });
-      //Sending new pages
-      let pages = chapters.find(chp => chp.id==id).pages;
-      this.props.sendNewPages(pages)
+      //Sending new pages: working
+      if (!same) {
+         let chp = chapters.find(chp => chp.id === id);
+         this.props.sendNewPages(chp.pages, chp.num);
+      }
       this.setState({
          chapters: chapters,
       })
    }
-   componentWillMount(){
-      this.addChapter();
-   }
-   componentWillReceiveProps(){
-      if(this.props.pages){
+   componentDidUpdate(prevProps){
+      if(prevProps.num !== this.props.num && this.props.num){
          let chapters = this.state.chapters.map((chp) => {
             return { ...chp }
          });
-         chapters.find(chp => chp.active === true).pages = this.props.pages
+         chapters.find(chp => chp.num === this.props.num).pages = this.props.pages;
          this.setState({
             chapters: chapters,
-         })
+         });
       }
+   }
+   componentWillMount() {
+      this.addChapter();
    }
    render() {
       let chapters = this.state.chapters;

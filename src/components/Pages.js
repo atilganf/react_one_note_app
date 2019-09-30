@@ -8,10 +8,10 @@ export default class Pages extends React.Component {
       super(props);
       this.state = {
          pages: [],
+         num: undefined,
       }
    }
    addPage = () => {
-      
       let pages = this.state.pages ? this.state.pages.map((page) => {
          return { ...page }
       }) : [];
@@ -50,19 +50,16 @@ export default class Pages extends React.Component {
          pages: pages,
       })
    }
-   shouldComponentUpdate(nextProps, nextState){
-      if(this.state.pages !== nextState.pages){
-         this.props.updatePages(this.state.pages);
-         console.log("componentShouldUpdate True")
-         return true;
+   componentDidUpdate(prevProps) {
+      if (prevProps.num !== this.props.num) {
+         if(prevProps.num){
+            this.props.updatePages(this.state.pages, this.state.num);
+         }
+         this.setState({
+            pages: this.props.pages,
+            num: this.props.num,
+         });
       }
-      return true;
-   }
-   componentWillReceiveProps() {
-      console.log("setStatePages")
-      this.setState({
-         pages: this.props.pages,
-      });
    }
 
    render() {
