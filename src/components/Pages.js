@@ -12,7 +12,7 @@ export default class Pages extends React.Component {
       }
    }
    addPage = () => {
-      if (this.props.num !== -1) {
+      if (this.props.num !== -1 && this.props.num) {
          let pages = this.state.pages ? this.state.pages.map((page) => {
             return { ...page }
          }) : [];
