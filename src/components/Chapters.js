@@ -21,7 +21,7 @@ export default class Chapters extends React.Component {
          id: shortid.generate(),
          pages: [],
          clr_num: this.state.clr_num,
-         num: this.state.chapter_num,
+         num: (this.state.chapters.length) ? this.state.chapter_num : 1,
          active: true,
       }];
       //sending new active chapters' pages to the Aside: working
@@ -32,15 +32,30 @@ export default class Chapters extends React.Component {
       this.setState({
          chapters: chapters,
          clr_num: (this.state.clr_num === 10) ? 0 : this.state.clr_num + 1,
-         chapter_num: this.state.chapter_num + 1,
+         chapter_num: (this.state.chapters.length) ? this.state.chapter_num + 1 : 2,
       });
    }
    deleteChapter = (id) => {
       let chapters = this.state.chapters.map((chp) => {
          return { ...chp }
       });
-      let index = chapters.findIndex(chp => chp.id === id);
-      chapters.splice(index, 1);
+
+      let delChpIndex = chapters.findIndex(chp => chp.id === id);
+      chapters[delChpIndex].num = -1;
+      //Changing active chapter when chapter deleted
+      let newActiveIndex = (delChpIndex === chapters.length - 1) ?
+         delChpIndex - 1 : delChpIndex + 1;
+      let newActiveChp = chapters[newActiveIndex];
+      if(newActiveChp){
+      chapters[newActiveIndex].active = true;
+
+      let newActiveNum = chapters[newActiveIndex].num;
+      let newActivePages = chapters[newActiveIndex].pages;
+      this.props.sendNewPages(newActivePages, newActiveNum);
+      }else{
+         this.props.sendNewPages([], -1);
+      }
+      chapters.splice(delChpIndex, 1);
       this.setState({
          chapters: chapters,
       });
@@ -62,12 +77,20 @@ export default class Chapters extends React.Component {
          let chp = chapters.find(chp => chp.id === id);
          this.props.sendNewPages(chp.pages, chp.num);
       }
+      let activeChp = chapters.find(chp => chp.active === true);
+
+      let pageToUpdate = chapters.find(chp => chp.num === this.props.num);
+      if (activeChp.num !== this.props.num && this.props.num && pageToUpdate) {
+         pageToUpdate.pages = this.props.pages
+      }
+      //Sıkıntı burda onActive in içinde devam ediyor.
       this.setState({
          chapters: chapters,
       })
    }
-   componentDidUpdate(prevProps){
-      if(prevProps.num !== this.props.num && this.props.num){
+   componentDidUpdate(prevProps) {
+      if (prevProps.num !== this.props.num && this.props.num
+         && this.state.chapters.find(chp => chp.num === this.props.num)) {
          let chapters = this.state.chapters.map((chp) => {
             return { ...chp }
          });
@@ -76,9 +99,6 @@ export default class Chapters extends React.Component {
             chapters: chapters,
          });
       }
-   }
-   componentWillMount() {
-      this.addChapter();
    }
    render() {
       let chapters = this.state.chapters;

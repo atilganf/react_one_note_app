@@ -23,6 +23,11 @@ export default class page extends React.Component {
    componentDidMount() {
       document.addEventListener('mousedown', (e) => this.handleClickOutside(e));
       this.inptxt.current.select();
+      if(this.props.allNamed){
+         this.setState({
+            named: true,
+         })
+      }
    }
    componentWillUnmount() {
       document.removeEventListener('mousedown', (e) => this.handleClickOutside(e));
@@ -32,6 +37,7 @@ export default class page extends React.Component {
       if (this.state.named && node.value === "") {
          node.value = node.defaultValue;
       }
+      
    }
    setpageRef = (node) => {
       this.pageRef = node;

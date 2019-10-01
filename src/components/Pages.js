@@ -12,25 +12,31 @@ export default class Pages extends React.Component {
       }
    }
    addPage = () => {
-      let pages = this.state.pages ? this.state.pages.map((page) => {
-         return { ...page }
-      }) : [];
-      pages.forEach(pg => pg.active = false);
-      pages = [...pages, {
-         id: shortid.generate(),
-         active: true,
-      }];
-      this.setState({
-         pages: pages,
-      });
+      if (this.props.num !== -1) {
+         let pages = this.state.pages ? this.state.pages.map((page) => {
+            return { ...page }
+         }) : [];
+         pages.forEach(pg => pg.active = false);
+         pages = [...pages, {
+            id: shortid.generate(),
+            active: true,
+         }];
+         this.setState({
+            pages: pages,
+         });
+      }
    }
    deletepage = (id) => {
       let pages = this.state.pages.map((page) => {
          return { ...page }
       });
-      let index = pages.findIndex(page => page.id === id);
-      pages.splice(index, 1);
+      let delPageIndex = pages.findIndex(page => page.id === id);
+      //Changing active page when page deleted
+      (delPageIndex === pages.length - 1) ?
+         pages[delPageIndex - 1].active = true :
+         pages[delPageIndex + 1].active = true
 
+      pages.splice(delPageIndex, 1);
       this.setState({
          pages: pages,
       });
@@ -52,7 +58,7 @@ export default class Pages extends React.Component {
    }
    componentDidUpdate(prevProps) {
       if (prevProps.num !== this.props.num) {
-         if(prevProps.num){
+         if (prevProps.num) {
             this.props.updatePages(this.state.pages, this.state.num);
          }
          this.setState({
@@ -68,8 +74,9 @@ export default class Pages extends React.Component {
       return (
          <div className="Pages">
             {pages.map(page => (
-               <Page active={page.active} onActive={() => this.onActive(page.id)}
-                  onDelete={() => this.deletepage(page.id)} key={page.id} />
+               <Page allNamed={pages === this.props.pages} active={page.active}
+                  onActive={() => this.onActive(page.id)} key={page.id}
+                  onDelete={() => this.deletepage(page.id)} />
             ))}
             <button
                onClick={() => this.addPage()} className="addBtn ab_c">
