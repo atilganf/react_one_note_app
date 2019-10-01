@@ -19,6 +19,7 @@ export default class Pages extends React.Component {
          pages.forEach(pg => pg.active = false);
          pages = [...pages, {
             id: shortid.generate(),
+            value: "Untitled Page",
             active: true,
          }];
          this.setState({
@@ -32,10 +33,11 @@ export default class Pages extends React.Component {
       });
       let delPageIndex = pages.findIndex(page => page.id === id);
       //Changing active page when page deleted
-      (delPageIndex === pages.length - 1) ?
-         pages[delPageIndex - 1].active = true :
-         pages[delPageIndex + 1].active = true
-
+      if (delPageIndex) {
+         (delPageIndex === pages.length - 1) ?
+            pages[delPageIndex - 1].active = true :
+            pages[delPageIndex + 1].active = true
+      }
       pages.splice(delPageIndex, 1);
       this.setState({
          pages: pages,
@@ -52,6 +54,15 @@ export default class Pages extends React.Component {
             page.active = true;
          }
       });
+      this.setState({
+         pages: pages,
+      })
+   }
+   setValue = (value, id) => {
+      let pages = this.state.pages.map((page) => {
+         return { ...page }
+      });
+      pages.find(pg => pg.id === id).value = value;
       this.setState({
          pages: pages,
       })
@@ -74,7 +85,8 @@ export default class Pages extends React.Component {
       return (
          <div className="Pages">
             {pages.map(page => (
-               <Page allNamed={pages === this.props.pages} active={page.active}
+               <Page id={page.id} value={page.value} sendValue={(value, id) => this.setValue(value, id)}
+                  allNamed={pages === this.props.pages} active={page.active}
                   onActive={() => this.onActive(page.id)} key={page.id}
                   onDelete={() => this.deletepage(page.id)} />
             ))}

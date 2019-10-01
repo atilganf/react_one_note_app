@@ -23,7 +23,7 @@ export default class page extends React.Component {
    componentDidMount() {
       document.addEventListener('mousedown', (e) => this.handleClickOutside(e));
       this.inptxt.current.select();
-      if(this.props.allNamed){
+      if (this.props.allNamed) {
          this.setState({
             named: true,
          })
@@ -37,7 +37,9 @@ export default class page extends React.Component {
       if (this.state.named && node.value === "") {
          node.value = node.defaultValue;
       }
-      
+      if (node.value !== this.props.value) {
+         this.props.sendValue(node.value, this.props.id);
+      }
    }
    setpageRef = (node) => {
       this.pageRef = node;
@@ -81,7 +83,7 @@ export default class page extends React.Component {
                <div className="txt">
                   <input ref={this.inptxt} className="input_txt" type="text"
                      onKeyUp={(e) => this.checkNamed(e)} maxLength="15"
-                     defaultValue="Untitled Page" 
+                     defaultValue={this.props.value}
                      readOnly={this.state.named}
                      autoFocus
                      style={{
